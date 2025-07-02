@@ -67,5 +67,4 @@ By leveraging KNN, a straightforward yet powerful supervised learning method, we
 
 ---
 
-## 📂 Repository Structure
 
