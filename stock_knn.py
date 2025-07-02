@@ -5,22 +5,19 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.metrics import accuracy_score, mean_squared_error
 
-# --- 1) Load and clean the NSE CSV ---
 df = pd.read_csv("TATACONSUMER_ALLNSE.csv")
-df.columns = df.columns.str.strip()  # remove extra spaces
+df.columns = df.columns.str.strip()  
 
-# Ensure numeric types for price columns
 for col in ["OPEN", "HIGH", "LOW", "close"]:
     df[col] = pd.to_numeric(df[col], errors="coerce")
 df.dropna(subset=["OPEN", "HIGH", "LOW", "close"], inplace=True)
 
-# --- 2) Feature engineering ---
 df["Open-Close"] = df["OPEN"] - df["close"]
 df["High-Low"] = df["HIGH"] - df["LOW"]
 
 X = df[["Open-Close", "High-Low"]].values
 
-# --- 3) Classification: buy (+1) vs sell (−1) ---
+#  Classification: buy (+1) vs sell (−1)
 y_cls = np.where(df["close"].shift(-1) > df["close"], 1, -1)[:-1]
 X_cls = X[:-1]
 
@@ -43,7 +40,7 @@ df_cls = pd.DataFrame({
 print("\nSample Classification Results:")
 print(df_cls.head(10))
 
-# --- 4) Regression: predict closing price ---
+#  Regression: predict closing price 
 y_reg = df["close"].values
 X_train_r, X_test_r, y_train_r, y_test_r = train_test_split(
     X, y_reg, test_size=0.25, random_state=42, shuffle=False
@@ -63,7 +60,7 @@ df_reg = pd.DataFrame({
 print("\nSample Regression Results:")
 print(df_reg.head(10))
 
-# --- 5) Visualize actual vs predicted closing price ---
+#  Visualize actual vs predicted closing price 
 plt.figure(figsize=(12, 6))
 plt.plot(y_test_r, label="Actual Close")
 plt.plot(y_pred_r, label="Predicted Close")
