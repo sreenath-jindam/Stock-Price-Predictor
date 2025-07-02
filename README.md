@@ -40,7 +40,7 @@ By leveraging KNN, a straightforward yet powerful supervised learning method, we
 
 ### 1. Data Preparation
 
-- **Load & clean** the CSV (`<CSV_FILENAME>.csv`).  
+- **Load & clean** the CSV (`TATACONSUMER_ALLNSE.csv`).  
 - **Ensure numeric** types for `Open`, `High`, `Low`, `Close`.  
 - **Sort** by date and drop rows with missing prices.
 
